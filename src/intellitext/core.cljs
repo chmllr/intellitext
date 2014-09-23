@@ -40,15 +40,9 @@
 (defn getJSChain [corpus]
   (clj->js (get-chain corpus)))
 
-(defn step [chain word]
-  (if-let [sub-map (chain word)]
-    (let [result (mapcat #(repeat (sub-map %) %) (keys sub-map))]
-      (first (shuffle result)))
-    "."))
-
 (defn get-sentence [start]
   (apply str 
          (interpose " "
-                    (take-while #(not (#{"!" "?" "."} %)) 
-                          (iterate #(step chain %)
+                    (take-while #(not (#{"!" "?" "." nil} %)) 
+                          (iterate #(mca/step chain %)
                                    (.toUpperCase start))))))
