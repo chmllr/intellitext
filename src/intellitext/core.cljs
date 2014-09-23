@@ -9,11 +9,9 @@
 (defn handler [response]
   (println 
     "corpus loaded"
-    { 
-     :bytes (count response) 
-     :words (count (string/split response #" "))
-     :lines (count (string/split response #"\n"))
-     })
+    { :bytes (count response) 
+      :words (count (string/split response #" "))
+      :lines (count (string/split response #"\n")) })
   (def chain (get-chain response)))
 
 (GET "/corpus.txt" {:handler handler})
@@ -37,22 +35,22 @@
     (print "unique words discovered" (count (keys chain)))
     chain))
 
-(defn getJSChain [corpus]
-  (clj->js (get-chain corpus)))
+(def getJSChain #(-> % get-chain clj->js))
 
 (defn take-while-with [pred sq]
   (loop [body sq result []]
-      (let [head (first body)
-            new-result (conj result head)]
-        (if (pred head)
-          (recur (rest body) new-result)
-          new-result))))
+    (let [head (first body)
+          new-result (conj result head)]
+      (if (pred head)
+        (recur (rest body) new-result)
+        new-result))))
 
 (defn get-sentence [start]
   (string/replace
     (apply str 
            (interpose " "
-                      (take-while-with #(and % (not (#{"!" "?" "."} %))) 
-                                  (iterate #(mca/step chain %)
-                                           (.toUpperCase start)))))
+                      (take-while-with
+                        #(and % (not (#{"!" "?" "."} %))) 
+                        (iterate #(mca/step chain %)
+                                 (.toUpperCase start)))))
     #" ([\.!\?,:;])" "$1"))
