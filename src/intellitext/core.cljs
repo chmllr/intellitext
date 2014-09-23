@@ -20,7 +20,7 @@
 
 (defn sterilize [corpus]
   (let [ln (count corpus)
-        pure-text (apply str (remove #(re-matches #"[,:\"'\-\(\)\*;]" %) corpus))
+        pure-text (apply str (remove #(re-matches #"[\"'\-\(\)\*]" %) corpus))
         normalized (string/replace pure-text #"(\t+|\n+|\r+|\s+)" " ")
         new-ln (count normalized)]
     (println "corpus sterilized, reduced from" ln "to" new-ln "chars (" (* 100 (/ new-ln ln)) "percent )")
@@ -28,7 +28,7 @@
 
 (defn get-chain [corpus]
   (let [corpus (.toUpperCase (sterilize corpus))
-        corpus (string/replace corpus #"([\.!\?])" " $1")
+        corpus (string/replace corpus #"([\.!\?,:;])" " $1")
         input (string/split corpus #"\s+") 
         start (js/Date.)
         chain (mca/compute input)
@@ -40,9 +40,19 @@
 (defn getJSChain [corpus]
   (clj->js (get-chain corpus)))
 
+(defn take-while-with [pred sq]
+  (loop [body sq result []]
+      (let [head (first body)
+            new-result (conj result head)]
+        (if (pred head)
+          (recur (rest body) new-result)
+          new-result))))
+
 (defn get-sentence [start]
-  (apply str 
-         (interpose " "
-                    (take-while #(and % (not (#{"!" "?" "."} %))) 
-                          (iterate #(mca/step chain %)
-                                   (.toUpperCase start))))))
+  (string/replace
+    (apply str 
+           (interpose " "
+                      (take-while-with #(and % (not (#{"!" "?" "."} %))) 
+                                  (iterate #(mca/step chain %)
+                                           (.toUpperCase start)))))
+    #" ([\.!\?,:;])" "$1"))
