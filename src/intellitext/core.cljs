@@ -43,6 +43,6 @@
 (defn get-sentence [start]
   (apply str 
          (interpose " "
-                    (take-while #(not (#{"!" "?" "." nil} %)) 
+                    (take-while #(and % (not (#{"!" "?" "."} %))) 
                           (iterate #(mca/step chain %)
                                    (.toUpperCase start))))))
