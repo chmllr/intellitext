@@ -4,11 +4,13 @@
 
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [cljs-ajax "0.3.0"]
+                 [com.cemerick/piggieback "0.1.3"]
                  [org.clojure/clojurescript "0.0-2311"]]
 
   :plugins [[lein-simpleton "1.3.0"]
             [lein-cljsbuild "1.0.4-SNAPSHOT"]]
 
+  :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
   :source-paths ["src"]
 
   :cljsbuild {

@@ -9,3 +9,4 @@ pom.xml
 .lein-plugins/
 intellitext.js
 .nrepl-port
+.repl/
