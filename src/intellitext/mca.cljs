@@ -8,5 +8,5 @@
       [next-word]
       inc)))
 
-(defn compute [chain input]
-  (reduce add-step chain (partition 2 1 input)))
+(defn compute [input]
+  (reduce add-step {} (partition 2 1 input)))
