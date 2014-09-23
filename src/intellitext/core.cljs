@@ -28,21 +28,28 @@
 
 (defn get-chain [corpus]
   (let [corpus (.toUpperCase (sterilize corpus))
-        sentences (string/split corpus #"[\.!\?]")
+        sentences (map string/trim (string/split corpus #"[\.!\?]"))
         inputs (map #(string/split % #"\s+") sentences)
+        inputs (map #(conj % ".") inputs)
         start (js/Date.)
         chain (reduce #(mca/compute % %2) {} inputs)
         ms (- (js/Date.) start)]
-    (print "computed markov chain of size" N "in" ms "ms")
+    (print "computed markov chain in" ms "ms")
     (print "unique words discovered" (count (keys chain)))
     chain))
 
-(defn step [word]
-  (if-let [sub-map (chain word)]
-    (first (shuffle sub-map))))
+(defn getJSChain [corpus]
+  (clj->js (get-chain corpus)))
 
-(defn get-sentence [start N]
+(defn step [chain word]
+  (if-let [sub-map (chain word)]
+    (let [result (mapcat #(repeat (sub-map %) %) (keys sub-map))]
+      (first (shuffle result)))
+    "."))
+
+(defn get-sentence [start]
   (apply str 
          (interpose " "
-                    (take N 
-                          (iterate step (.toUpperCase start))))))
+                    (take-while #(not= "." %) 
+                          (iterate #(step chain %)
+                                   (.toUpperCase start))))))
