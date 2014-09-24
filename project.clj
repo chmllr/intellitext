@@ -3,6 +3,7 @@
   :url "http://example.com/FIXME"
 
   :dependencies [[org.clojure/clojure "1.6.0"]
+                 [org.clojure/core.async "0.1.338.0-5c5012-alpha"]
                  [cljs-ajax "0.3.0"]
                  [com.cemerick/piggieback "0.1.3"]
                  [org.clojure/clojurescript "0.0-2311"]]
