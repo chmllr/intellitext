@@ -4,7 +4,7 @@
   (assoc m
     prev-word
     (update-in
-      (m prev-word {next-word 0})
+      (m prev-word {})
       [next-word]
       inc)))
 

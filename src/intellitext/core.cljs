@@ -12,8 +12,21 @@
 
 (def key-presses (chan))
 
+(def input-field (dom/getElement "input"))
+(def cells (map #(dom/getElement (str "cell" %)) [0 1 2]))
+
+(defn make-suggestion []
+  (let [input (string/upper-case 
+                (last (string/split (.-value input-field) #" ")))
+        suggestions (take 100 (repeatedly #(mca/step chain input)))
+        suggestions (take 3 (distinct suggestions))
+        ]
+    (doseq [[cell word] (map list cells suggestions)]
+      (set! (.-innerHTML cell) word))))
+
 (go (while true
-      ((.log js/console (<! key-presses)))))
+      (when (= 32 (.-charCode (<! key-presses)))
+        (make-suggestion))))
 
 (events/listen (dom/getElement "input") "keypress"
                (fn [e] (put! key-presses e)))
@@ -61,7 +74,7 @@
                       (take-while-with
                         #(and % (not (#{"!" "?" "."} %))) 
                         (iterate #(mca/step chain %)
-                                 (.toUpperCase start)))))
+                                 (string/upper-case start)))))
     #" ([\.!\?,:;])" "$1"))
 
 (defn- handler [response]
