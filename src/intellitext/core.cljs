@@ -24,9 +24,23 @@
     (doseq [[cell word] (map list cells suggestions)]
       (set! (.-innerHTML cell) word))))
 
+(defn add-suggestion [i]
+  (set! (.-value input-field) 
+        (str (.-value input-field) " " 
+             (.-innerHTML (dom/getElement (str "cell" i)))
+             " ")))
+
+(def dispatcher
+  {32 make-suggestion
+   49 #(add-suggestion 0)
+   50 #(add-suggestion 1)
+   51 #(add-suggestion 2)})
+
 (go (while true
-      (when (= 32 (.-charCode (<! key-presses)))
-        (make-suggestion))))
+      (let [e (<! key-presses)
+            code (.-charCode e)] 
+        ;(when ())
+        ((dispatcher code identity)))))
 
 (events/listen (dom/getElement "input") "keypress"
                (fn [e] (put! key-presses e)))
