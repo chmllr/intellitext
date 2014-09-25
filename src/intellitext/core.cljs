@@ -12,10 +12,8 @@
 (def cells (map #(dom/getElement (str "cell" %)) [0 1 2]))
 
 (defn make-suggestion []
-  (let [input (string/upper-case 
-                (last (string/split (.-value input-field) #" ")))
-        suggestions (take 100 (repeatedly #(mca/step chain input)))
-        suggestions (take 3 (distinct suggestions))]
+  (let [input (last (string/split (.-value input-field) #" "))
+        suggestions (map #(mca/step chain input %) [0 1 2])]
     (doseq [[cell word] (map list cells suggestions)]
       (set! (.-innerHTML cell) word))))
 
@@ -26,11 +24,6 @@
              " "))
   (make-suggestion))
 
-(def dispatcher
-  {49 #(add-suggestion 0)
-   50 #(add-suggestion 1)
-   51 #(add-suggestion 2)})
-
 (events/listen (dom/getElement "input") "keypress"
                (fn [e] 
                  (let [code (.-charCode e)]
@@ -38,7 +31,7 @@
                      (and (< 48 code) (< code 52))
                      (do 
                        (.preventDefault e)
-                       ((dispatcher code)))
+                       (add-suggestion (Math/abs (- 49 code))))
                      (= 32 code) (make-suggestion)))))
 
 (defn- log [& strings]
@@ -57,7 +50,7 @@
     normalized))
 
 (defn get-chain [corpus]
-  (let [corpus (.toUpperCase (sterilize corpus))
+  (let [corpus (string/lower-case (sterilize corpus))
         corpus (string/replace corpus #"([\.!\?,:;])" " $1")
         input (string/split corpus #"\s+") 
         start (js/Date.)
@@ -83,8 +76,7 @@
            (interpose " "
                       (take-while-with
                         #(and % (not (#{"!" "?" "."} %))) 
-                        (iterate #(mca/step chain %)
-                                 (string/upper-case start)))))
+                        (iterate #(mca/step chain %) start))))
     #" ([\.!\?,:;])" "$1"))
 
 (defn- handler [response]
