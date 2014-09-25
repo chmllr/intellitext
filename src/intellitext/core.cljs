@@ -1,7 +1,5 @@
 (ns intellitext.core
-  (:require-macros [cljs.core.async.macros :refer [go]])
   (:require
-    [cljs.core.async :as async :refer [>! <! put! chan alts!]]
     [goog.events :as events]
     [goog.dom :as dom]
     [intellitext.mca :as mca]
@@ -10,8 +8,6 @@
 
 (enable-console-print!)
 
-(def key-presses (chan))
-
 (def input-field (dom/getElement "input"))
 (def cells (map #(dom/getElement (str "cell" %)) [0 1 2]))
 
@@ -19,31 +15,31 @@
   (let [input (string/upper-case 
                 (last (string/split (.-value input-field) #" ")))
         suggestions (take 100 (repeatedly #(mca/step chain input)))
-        suggestions (take 3 (distinct suggestions))
-        ]
+        suggestions (take 3 (distinct suggestions))]
     (doseq [[cell word] (map list cells suggestions)]
       (set! (.-innerHTML cell) word))))
 
 (defn add-suggestion [i]
   (set! (.-value input-field) 
-        (str (.-value input-field) " " 
+        (str (.-value input-field)
              (.-innerHTML (dom/getElement (str "cell" i)))
-             " ")))
+             " "))
+  (make-suggestion))
 
 (def dispatcher
-  {32 make-suggestion
-   49 #(add-suggestion 0)
+  {49 #(add-suggestion 0)
    50 #(add-suggestion 1)
    51 #(add-suggestion 2)})
 
-(go (while true
-      (let [e (<! key-presses)
-            code (.-charCode e)] 
-        ;(when ())
-        ((dispatcher code identity)))))
-
 (events/listen (dom/getElement "input") "keypress"
-               (fn [e] (put! key-presses e)))
+               (fn [e] 
+                 (let [code (.-charCode e)]
+                   (cond 
+                     (and (< 48 code) (< code 52))
+                     (do 
+                       (.preventDefault e)
+                       ((dispatcher code)))
+                     (= 32 code) (make-suggestion)))))
 
 (defn- log [& strings]
   (let [tableau (dom/getElement "tableau")
