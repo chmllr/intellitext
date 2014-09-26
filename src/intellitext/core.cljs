@@ -88,5 +88,5 @@
   (def chain (get-chain response)))
 
 (log "downloading the corpus from '/corpus.txt'...")
-(GET "/corpus.txt" {:handler handler})
+(GET "corpus.txt" {:handler handler})
 

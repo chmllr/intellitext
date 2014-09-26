@@ -139,6 +139,6 @@ intellitext.core.handler = (function handler(response){intellitext.core.log.call
 intellitext.core.chain = intellitext.core.get_chain.call(null,response);
 });
 intellitext.core.log.call(null,"downloading the corpus from '/corpus.txt'...");
-ajax.core.GET.call(null,"/corpus.txt",new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"handler","handler",-195596612),intellitext.core.handler], null));
+ajax.core.GET.call(null,"corpus.txt",new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"handler","handler",-195596612),intellitext.core.handler], null));
 
 //# sourceMappingURL=core.js.map
