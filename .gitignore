@@ -6,6 +6,5 @@ pom.xml
 .lein-deps-sum
 .lein-repl-history
 .lein-plugins/
-intellitext.js
 .nrepl-port
 .repl/
