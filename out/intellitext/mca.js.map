@@ -1,18 +1,16 @@
 {"version":3,
  "file":
- "/C:/Users/c.c.mueller/Downloads/tt/intellitextCLJS/out/intellitext/mca.js",
+ "/C:/Users/c.c.mueller/Downloads/intellitextCLJS/out/intellitext/mca.js",
  "sources":["mca.cljs"],
- "lineCount":36,
+ "lineCount":18,
  "mappings":
- ";AAAA;;AAEA,2BAAA,qBAAAA,SAAA,AAAA,IAAAC,YAAAD,wBAAA,AAAAE,wBAAAD,UAAA,IAAA,sBAAA,AAAAC,wBAAAD,UAAA,IAAA,MAAA,zMAAOE,8CAAUC,uCAAGC,4DAAUC,wDAC5B,OAACC,0BAAMH,EACLC,UACA,wFAAA,xFAACG,8BACC,sBAAA,tBAACJ,YAAEC,iIACFC,kBACDG;;AAEN,0BAAA,yBAAA,nDAAMC,4CAASC,OACb,2DAAA,pDAACC,2BAAOT,4DAAY,8BAAA,IAAA,lCAACU,sCAAcF;;AAErC,uBAAA,vBAAMG;;uCAAN,dACIC,MAAMC,QAAQ,mCAAA,5BAACC,eAAKF,MAAMC;;8CAD9B,rBAEID,MAAMC,OAAOE,QACd,IAAAC,6CAAA,AAAA,oBAAAA,5CAAiB,AAACJ,gBAAMC;CAAxB,cAAAG,mBAAA,7BAASC,6BACP,IAAMC,UAAQ,AAACC,4BAAQ,AAACC,4BAAQC,iBAAO,yBAAA,zBAACC,0DAAQL,eAC1CA,cAAQ,yBAAA,zBAACK,4DAAS,AAACC,yBAAKR,OAAOG,cAC/BM,SAAO,2BAAA,3BAACE;kBAADD,iBAAA,AAAS,yEAAAA,lEAACE,2BAAO,sBAAAF,tBAACR;;wCAF/B,vCAE6C,AAACW,yBAAKX,cACjD,OAACY,0BAAM,AAACC,4BAAQN;;CAJpB;;;gBADCZ,MAAMC,OAAOE;;;yBAAbH,MAAMC;;yBAAND,MAAMC,OAAOE",
+ ";AAAA;;AAEA,2BAAA,qBAAAA,SAAA,AAAA,IAAAC,YAAAD,wBAAA,AAAAE,wBAAAD,UAAA,IAAA,sBAAA,AAAAC,wBAAAD,UAAA,IAAA,MAAA,zMAAOE,8CAAUC,uCAAGC,4DAAUC,wDAC5B,OAACC,0BAAMH,EACAC,UACA,wFAAA,xFAACG,8BACC,sBAAA,tBAACJ,YAAEC,iIACFC,kBACDG;;AAEX,0BAAA,yBAAA,nDAAMC,4CAASC,OACb,2DAAA,pDAACC,2BAAOT,4DAAY,8BAAA,IAAA,lCAACU,sCAAcF;;AAErC,uBAAA,6BAAA,pDAAMG,sCAAMC,MAAMC,QAChB,IAAAC,6CAAA,AAAA,oBAAAA,5CAAiB,AAACF,gBAAMC;CAAxB,cAAAC,mBAAA,7BAASC,6BACP,IAAMC,SAAO,2BAAA,3BAACE;kBAADD,iBAAA,AAAS,qEAAAA,9DAACE,2BAAO,kBAAAF,lBAACF;;oCAA/B,nCAA6C,AAACK,yBAAKL,UACjD,OAACM,0BAAM,AAACC,4BAAQN;;CAFpB",
  "names":
  ["p__5843", "vec__5845", "cljs.core/nth", "intellitext.mca/add-step",
   "m", "prev-word", "next-word", "cljs.core/assoc",
   "cljs.core/update-in", "cljs.core/inc", "intellitext.mca/compute",
   "input", "cljs.core/reduce", "cljs.core/partition",
-  "intellitext.mca/step", "chain", "member", "step", "ignore",
-  "temp__4124__auto__", "sub-map", "ordered", "cljs.core/reverse",
-  "cljs.core/sort-by", "cljs.core/second", "cljs.core/into",
-  "cljs.core/drop", "result", "p1__5846#", "cljs.core/mapcat",
+  "intellitext.mca/step", "chain", "member", "temp__4124__auto__",
+  "sub-map", "result", "p1__5846#", "cljs.core/mapcat",
   "cljs.core/repeat", "cljs.core/keys", "cljs.core/first",
   "cljs.core/shuffle"]}
