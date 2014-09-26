@@ -13,7 +13,7 @@
 
 (defn make-suggestion []
   (let [input (last (string/split (.-value input-field) #" "))
-        suggestions (map #(mca/step chain input %) [0 1 2])]
+        suggestions (iterate #(mca/step chain %) input)]
     (doseq [[cell word] (map list cells suggestions)]
       (set! (.-innerHTML cell) word))))
 
@@ -88,5 +88,5 @@
   (def chain (get-chain response)))
 
 (log "downloading the corpus from '/corpus.txt'...")
-(GET "/corpus.txt" {:handler handler})
+(GET "corpus.txt" {:handler handler})
 
