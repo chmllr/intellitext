@@ -54,7 +54,7 @@
         corpus (string/replace corpus #"([\.!\?,:;])" " $1")
         input (string/split corpus #"\s+") 
         start (js/Date.)
-        chain (mca/compute input)
+        chain (mca/compute {} input)
         ms (- (js/Date.) start)]
     (log "markov chain computed in" ms "ms")
     (log "unique words discovered:" (count (keys chain)))
