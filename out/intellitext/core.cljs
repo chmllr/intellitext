@@ -12,8 +12,13 @@
 (def cells (map #(dom/getElement (str "cell" %)) [0 1 2]))
 
 (defn make-suggestion []
-  (let [input (last (string/split (.-value input-field) #" "))
-        suggestions (iterate #(mca/step chain %) input)]
+  (let [input (string/lower-case 
+                (last (string/split (.-value input-field) #" ")))
+        follow-ups (keys (chain input))
+        stream (if (< (count follow-ups) 3)
+                 follow-ups
+                 (repeatedly #(mca/step chain input)))
+        suggestions (distinct stream)]
     (doseq [[cell word] (map list cells suggestions)]
       (set! (.-innerHTML cell) word))))
 
