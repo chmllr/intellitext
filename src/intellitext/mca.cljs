@@ -1,12 +1,7 @@
 (ns intellitext.mca) ; Markov Chain Automata
 
-(defn- add-step [m [prev-word next-word]]
-  (assoc m
-         prev-word
-         (update-in
-           (m prev-word {})
-           [next-word]
-           inc)))
+(defn- add-step [m words]
+   (update-in m words inc))
 
 (defn compute [input]
   (reduce add-step {} (partition 2 1 input)))
